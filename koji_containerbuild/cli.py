@@ -130,7 +130,8 @@ def parse_arguments(options, args, flatpak):
                       help=_("Signing intent of the ODCS composes [default: %default]"),
                       default=None, dest='signing_intent')
     parser.add_option("--compose-id",
-                      help=_("ODCS composes used. May be used multiple times"),
+                      help=_("ODCS composes used. May be used multiple times. Cannot be"
+                             "used with signing-intent or repo-url"),
                       dest='compose_ids', action='append', metavar="COMPOSE_ID")
     if not flatpak:
         parser.add_option("--release",
@@ -148,6 +149,9 @@ def parse_arguments(options, args, flatpak):
 
     if build_opts.signing_intent and build_opts.compose_ids:
         parser.error(_("--signing-intent cannot be used with --compose-id"))
+
+    if build_opts.compose_ids and build_opts.yum_repourls:
+        parser.error(_("--compose-id cannot be used with --repo-url"))
 
     opts = {}
     if not build_opts.git_branch:

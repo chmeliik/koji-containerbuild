@@ -810,7 +810,8 @@ class TestBuilder(object):
         ({}, False),
         ({'compose_ids': [1, 2]}, False),
         ({'signing_intent': 'intent1'}, False),
-        ({'compose_ids': [1, 2], 'signing_intent': 'intent1'}, True)
+        ({'compose_ids': [1, 2], 'signing_intent': 'intent1'}, True),
+        ({'compose_ids': [1, 2], 'yum_repourls': ['www.repo.com']}, True)
     ))
     def test_compose_ids_and_signing_intent(self, tmpdir, additional_args, raises):
         koji_task_id = 123
