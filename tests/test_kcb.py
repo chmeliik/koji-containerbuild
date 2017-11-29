@@ -526,7 +526,7 @@ class TestBuilder(object):
             task.handler(src['src'], 'target', opts=additional_args)
         assert 'already exists' in str(exc_info.value)
 
-    # split into multiple groups to minimize run time and complexity
+    # split into multiple groups to minimize run time and complexity.
     @pytest.mark.parametrize(('wait', 'quiet'), (
         (None, None),
         (True, None),
