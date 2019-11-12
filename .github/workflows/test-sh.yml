@@ -32,6 +32,23 @@ jobs:
         OS_VERSION: ${{ matrix.os.version }}
         PYTHON_VERSION: ${{ matrix.os.python }}
 
+    - name: Post coverage results to Coveralls
+      uses: coverallsapp/github-action@v1.0.1
+      with:
+        github-token: ${{ secrets.github_token }}
+
+    - name: Set up python for installation of coveralls
+      uses: actions/setup-python@v1
+      with:
+        python-version: '3.x'
+
+    - name: Post coverage results to Coveralls
+      run: |
+        pip install coveralls
+        coveralls
+      env:
+        COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+
 
   bandit:
     name: Bandit analyzer for python ${{ matrix.fedora.python }}
