@@ -1,0 +1,58 @@
+name: Run tests using test.sh
+
+on: [pull_request]
+
+jobs:
+  pytest:
+    name: Python ${{ matrix.os.python }} tests on ${{ matrix.os.name }}
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        os:
+        - name: centos
+          version: 7
+          python: 2
+
+        - name: fedora
+          version: 29
+          python: 2
+
+        - name: fedora
+          version: 30
+          python: 3
+
+    steps:
+    - uses: actions/checkout@v1
+
+    - run: ./test.sh
+      env:
+        OS: ${{ matrix.os.name }}
+        OS_VERSION: ${{ matrix.os.version }}
+        PYTHON_VERSION: ${{ matrix.os.python }}
+
+
+  bandit:
+    name: Bandit analyzer for python ${{ matrix.fedora.python }}
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        fedora:
+        - version: 29
+          python: 2
+
+        - version: 30
+          python: 3
+
+    steps:
+    - uses: actions/checkout@v1
+
+    - run: ./test.sh
+      env:
+        OS: fedora
+        OS_VERSION: ${{ matrix.fedora.version }}
+        PYTHON_VERSION: ${{ matrix.fedora.python }}
+        ACTION: bandit
