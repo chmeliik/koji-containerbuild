@@ -13,7 +13,7 @@ if [[ $OS == "fedora" ]]; then
 fi
 
 CONTAINER_NAME="koji-containerbuild-$OS-$OS_VERSION-py$PYTHON_VERSION"
-RUN="docker exec -ti $CONTAINER_NAME"
+RUN="docker exec -i $CONTAINER_NAME"
 if [[ $OS == "fedora" ]]; then
   PIP_PKG="python$PYTHON_VERSION-pip"
   PIP="pip$PYTHON_VERSION"
@@ -92,7 +92,7 @@ $RUN $PIP install -r tests/requirements.txt
 
 case ${ACTION} in
 "test")
-  TEST_CMD="pytest -vv tests --cov koji_containerbuild"
+  TEST_CMD="pytest -vv tests --cov koji_containerbuild --color=yes"
   ;;
 "bandit")
   $RUN $PIP install bandit
